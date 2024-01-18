@@ -5,46 +5,47 @@ function GradientPage() {
   const [gradientColors, setGradientColors] = useState(["#ff0000", "#00ff00"]);
   const [colorPercentages, setColorPercentages] = useState([0, 100]);
   const [gradientType, setGradientType] = useState("linear");
+  const [gradientDegree, setGradientDegree] = useState(90);
 
   const handleColorChange = (index, color) => {
-    const newColors = [...gradientColors];
-    newColors[index] = color;
-    setGradientColors(newColors);
+    setGradientColors((prevColors) => [...prevColors.slice(0, index), color, ...prevColors.slice(index + 1)]);
     generateGradientCode();
   };
 
   const handlePercentageChange = (index, percentage) => {
-    const newPercentages = [...colorPercentages];
-    newPercentages[index] = percentage;
-    setColorPercentages(newPercentages);
+    setColorPercentages((prevPercentages) => [...prevPercentages.slice(0, index), percentage, ...prevPercentages.slice(index + 1)]);
     generateGradientCode();
   };
 
   const handleAddColor = () => {
-    setGradientColors([...gradientColors, "#000000"]);
-    setColorPercentages([...colorPercentages, 100]);
+    setGradientColors((prevColors) => [...prevColors, "#000000"]);
+    setColorPercentages((prevPercentages) => [...prevPercentages, 100]);
   };
 
   const handleRemoveColor = (index) => {
-    const newColors = [...gradientColors];
-    const newPercentages = [...colorPercentages];
-    newColors.splice(index, 1);
-    newPercentages.splice(index, 1);
-    setGradientColors(newColors);
-    setColorPercentages(newPercentages);
+    setGradientColors((prevColors) => [...prevColors.slice(0, index), ...prevColors.slice(index + 1)]);
+    setColorPercentages((prevPercentages) => [...prevPercentages.slice(0, index), ...prevPercentages.slice(index + 1)]);
     generateGradientCode();
   };
 
   const handleGradientTypeChange = (type) => {
     setGradientType(type);
+    setGradientDegree(type === "linear" ? 90 : 0);
+    setColorPercentages(type === "radial" ? [0, 100] : colorPercentages);
+  };
+
+  const handleDegreeChange = (degree) => {
+    setGradientDegree(degree);
+    generateGradientCode();
   };
 
   const generateGradientCode = () => {
-    console.log(
-      `Generated CSS Code: ${gradientType}-gradient(${gradientColors
-        .map((color, index) => `${color} ${colorPercentages[index]}%`)
-        .join(", ")})`
-    );
+    const gradientCode =
+      gradientType === "linear"
+        ? `linear-gradient(${gradientDegree}deg, ${gradientColors.map((color, index) => `${color} ${colorPercentages[index]}%`).join(", ")})`
+        : `radial-gradient(${gradientColors.map((color, index) => `${color} ${colorPercentages[index]}%`).join(", ")})`;
+
+    console.log(`Generated CSS Code: ${gradientCode}`);
   };
 
   return (
@@ -52,11 +53,23 @@ function GradientPage() {
       <div
         className="w-64 h-32 bg-gradient-to-r"
         style={{
-          backgroundImage: `${gradientType}-gradient(${gradientColors
-            .map((color, index) => `${color} ${colorPercentages[index]}%`)
-            .join(", ")})`,
+          backgroundImage:
+            gradientType === "linear"
+              ? `linear-gradient(${gradientDegree}deg, ${gradientColors.map((color, index) => `${color} ${colorPercentages[index]}%`).join(", ")})`
+              : `radial-gradient(${gradientColors.map((color, index) => `${color} ${colorPercentages[index]}%`).join(", ")})`,
         }}
       ></div>
+
+      {gradientType === "linear" && (
+        <div className="flex items-center gap-2">
+          <label>Degree:</label>
+          <input
+            type="number"
+            value={gradientDegree}
+            onChange={(e) => handleDegreeChange(e.target.value)}
+          />
+        </div>
+      )}
 
       {gradientColors.map((color, index) => (
         <div key={index} className="flex items-center gap-2">
