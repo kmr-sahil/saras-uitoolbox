@@ -4,8 +4,8 @@ import convert from 'color-convert';
 
 function VariantPage() {
   const [inputColor, setInputColor] = useState('');
-  const [hslColors, setHslColors] = useState<string[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [hslColors, setHslColors] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (inputColor) {
@@ -23,16 +23,15 @@ function VariantPage() {
         const hslColor = convert.rgb.hsl(rgbColor);
 
         let x = 6;
-        if(hslColor[2] > 50){
-            x = 4.2
+        if (hslColor[2] > 50) {
+          x = 4.2;
         }
-        console.log(x)
         let divider = (100 - hslColor[2]) / x;
-        const hslColors = Array.from({ length: 4 }, (_, index) => {
-          return `hsl(${hslColor[0]}, ${hslColor[1]}%, ${hslColor[2] + index * divider}%)`;
+        const temphsl = Array.from({ length: 4 }, (_, index) => {
+          return `hsl(${hslColor[0]}, ${hslColor[1]}%, ${Math.round(hslColor[2] + index * divider)}%)`;
         });
 
-        setHslColors(hslColors);
+        setHslColors(temphsl);
         setError(null);
       } else {
         setHslColors([]);
@@ -41,8 +40,33 @@ function VariantPage() {
     } else {
       setHslColors([]);
       setError(null);
+
+      
     }
   }, [inputColor]);
+
+  useEffect(()=>{
+    console.log(hslColors)
+
+  },[hslColors])
+
+  const hslToHex = (val) => {
+    let hslNumbers = val.match(/\d+/g);
+  
+    if (hslNumbers && hslNumbers.length === 3) {
+      let [a, b, c] = hslNumbers;
+  
+      const hexColor = convert.hsl.hex([a, b, c]);
+  
+      console.log(hexColor);
+  
+      return hexColor;
+    } else {
+      console.log("Invalid HSL string format");
+      return null; // or handle the error accordingly
+    }
+  };
+  
 
   return (
     <div className='flex flex-col gap-4 items-center justify-center p-[2rem]'>
@@ -64,17 +88,15 @@ function VariantPage() {
           <p>{error}</p>
         </div>
       )}
-      {hslColors.length > 0 && (
-        <div className='mt-4'>
-          <p className='text-lg'>HSL Colors: {hslColors}</p>
-          {hslColors.map((hsl, index) => (
+      {hslColors.map((hsl, index) => (
             <div
               key={index}
-              className='w-[10rem] h-[4rem] mt-2'
+              className='w-[10rem] h-[4rem] mt-2 flex items-baseline p-[0.2rem]'
               style={{ backgroundColor: hsl || 'transparent' }}
-            />
-          ))}
-        </div>
+            >
+              <span className='text-xs mt-auto'>{"#" + hslToHex(hsl)}</span>
+            </div>
+          )
       )}
     </div>
   );
