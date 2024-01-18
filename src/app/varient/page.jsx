@@ -45,10 +45,6 @@ function VariantPage() {
     }
   }, [inputColor]);
 
-  useEffect(()=>{
-    console.log(hslColors)
-
-  },[hslColors])
 
   const hslToHex = (val) => {
     let hslNumbers = val.match(/\d+/g);
@@ -65,6 +61,16 @@ function VariantPage() {
       console.log("Invalid HSL string format");
       return null; // or handle the error accordingly
     }
+  };
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        console.log(`Copied to clipboard: ${text}`);
+      })
+      .catch((err) => {
+        console.error('Unable to copy to clipboard', err);
+      });
   };
   
 
@@ -93,6 +99,7 @@ function VariantPage() {
               key={index}
               className='w-[10rem] h-[4rem] mt-2 flex items-baseline p-[0.2rem]'
               style={{ backgroundColor: hsl || 'transparent' }}
+              onClick={() => copyToClipboard("#" + hslToHex(hsl))}
             >
               <span className='text-xs mt-auto'>{"#" + hslToHex(hsl)}</span>
             </div>
