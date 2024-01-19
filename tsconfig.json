@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/varient/page.jsx", "src/app/gradient/page.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.jsx", "**/*.js", ".next/types/**/*.ts", ".next/types/**/*.js"],
   "exclude": ["node_modules"]
 }
