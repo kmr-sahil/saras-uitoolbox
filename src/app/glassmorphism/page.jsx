@@ -1,12 +1,31 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import convert from 'color-convert';
 
 function GlassMorphismPage() {
+  const [textColor, setTextColor] = useState('ffffff')
   const [glass, setGlass] = useState({
     color: "#ececec", // Set a default color
     blur: 10,
     opacity: 0.5,
   });
+
+  useEffect(() => {
+
+    const rgbColor = convert.hex.rgb(glass.color);
+    
+    const hslColor = convert.rgb.hsl(rgbColor);
+    console.log(hslColor)
+
+    if(hslColor[2] > 65){
+        setTextColor('000000')
+    } else {
+        setTextColor('ffffff')
+    }
+
+    console.log(textColor)
+
+  },[glass.color])
 
   // Function to generate CSS based on user inputs
   const generateCss = () => {
@@ -27,14 +46,17 @@ function GlassMorphismPage() {
   return (
     <div className='flex flex-col gap-4 items-center justify-center p-[2rem]'>
       <div
-        className='w-[20rem] h-[20rem] p-[2rem] flex items-center justify-center bg-cover bg-center'
+        className='w-[20rem] h-[20rem] p-[2rem] flex items-center justify-center'
         style={{
-          background: `url(https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
-        }}
+            background: `url(https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
+            backgroundSize: 'contain', // Specify background size here
+            backgroundPosition: 'center', // Specify background position here
+          }}
       >
         <div
           className='w-[10rem] h-[15rem] rounded-lg'
           style={{
+            color: `#${textColor}`,
             background: `rgba(${parseInt(glass.color.slice(1, 3), 16)}, ${parseInt(
               glass.color.slice(3, 5),
               16
