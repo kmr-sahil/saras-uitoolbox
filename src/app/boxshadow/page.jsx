@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react';
+import { RgbaColorPicker } from 'react-colorful';
 
 function BoxShadowPage() {
   const [shadowDetails, setShadowDetails] = useState({
@@ -34,8 +35,10 @@ function BoxShadowPage() {
     return `${insetValue}${horOffset}px ${verOffset}px ${blur}px ${spread}px ${shadowColor}`;
   };
 
+
   return (
     <div className="flex flex-col gap-4 items-center justify-center p-[2rem]">
+        
       <div
         className="w-[15rem] h-[15rem] p-[2rem] flex items-center justify-center border-2 border-stone-500 rounded-lg"
         style={{

@@ -1,41 +1,25 @@
-// components/ColorPickerCard.js
+"use client"
+import { RgbaColorPicker } from 'react-colorful';
+import { useEffect, useState } from 'react';
 
-import React, { useState } from 'react';
-import { TwitterPicker } from 'react-color';
 
-const ColorPickerCard = () => {
-  const [selectedColor, setSelectedColor] = useState('#0000ff');
-  const [displayColorPicker, setDisplayColorPicker] = useState(false);
+function ColorPicker({setGetRGB}) {
 
-  const handleClick = () => {
-    setDisplayColorPicker(!displayColorPicker);
-  };
+  const [color, setColor] = useState({ r: 0, g: 0, b: 200, a: 1 });
 
-  const handleClose = () => {
-    setDisplayColorPicker(false);
-  };
+  useEffect(() => {
+    setGetRGB(color)
+  },[color])
 
-  const handleChange = (color) => {
-    setSelectedColor(color.hex);
-    document.body.style.background = color.hex;
-  };
+  console.log(color)
 
   return (
-    <div className="color-picker-card">
-      <div
-        className="color-preview bg-gray-300 w-16 h-16 border border-gray-400 cursor-pointer"
-        onClick={handleClick}
-      >
-        .
+    <>
+      <div className='custom-layout example'>
+            <RgbaColorPicker color={color} onChange={setColor} />
       </div>
-      {displayColorPicker && (
-        <div className="color-picker-popover absolute z-10 top-20 left-0">
-          <div className="color-picker-cover fixed top-0 right-0 bottom-0 left-0" onClick={handleClose} />
-          <TwitterPicker color={selectedColor} onChange={handleChange} />
-        </div>
-      )}
-    </div>
-  );
-};
+    </>
+  )
+}
 
-export default ColorPickerCard;
+export default ColorPicker

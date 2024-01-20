@@ -12,6 +12,7 @@
     "color-convert": "^2.0.1",
     "next": "13.5.4",
     "react": "^18",
+    "react-colorful": "^5.6.1",
     "react-dom": "^18"
   },
   "devDependencies": {
