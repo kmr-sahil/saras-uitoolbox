@@ -3,9 +3,9 @@ import { RgbaColorPicker } from 'react-colorful';
 import { useEffect, useState } from 'react';
 
 
-function ColorPicker({setGetRGB}) {
+function ColorPicker({setGetRGB, getRGB}) {
 
-  const [color, setColor] = useState({ r: 0, g: 0, b: 200, a: 1 });
+  const [color, setColor] = useState(getRGB);
 
   useEffect(() => {
     setGetRGB(color)
