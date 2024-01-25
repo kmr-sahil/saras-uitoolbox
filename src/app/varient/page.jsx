@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import convert from 'color-convert';
+import InpColor from '@/component/InpColor'
 
 function VariantPage() {
   const [inputColor, setInputColor] = useState('');
@@ -76,6 +77,9 @@ function VariantPage() {
 
   return (
     <div className='flex flex-col gap-4 items-center justify-center p-[2rem]'>
+
+      <InpColor inputColor={inputColor} setInputColor={setInputColor} />
+
       <input
         type='color'
         className='border-2 border-black'

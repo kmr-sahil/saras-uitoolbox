@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from "react";
 
+
 function GradientPage() {
   const [gradientColors, setGradientColors] = useState([
     {
