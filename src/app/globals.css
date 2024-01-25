@@ -6,7 +6,7 @@
 .custom-layout .react-colorful {
     padding: 16px;
     border-radius: 12px;
-    background: #33333a;
+    background: #E8E9EB;
     box-shadow: 0 6px 12px #999;
   }
   
@@ -30,4 +30,16 @@
   .custom-layout .react-colorful__alpha-pointer {
     width: 20px;
     height: 20px;
+  }
+
+
+  @layer components {
+
+    .inp-outer {
+      @apply border-[2px] border-[#313638] p-[4px] rounded-[12px];
+    }
+
+    .inp {
+      @apply w-[14rem] border-[2px] border-[#313638] px-[16px] py-[8px] rounded-[8px] bg-[#E8E9EB] ;
+    }
   }

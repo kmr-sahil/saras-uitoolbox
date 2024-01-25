@@ -1,5 +1,5 @@
 "use client"
-import ColorPicker from '@/component/ColorPicker'
+import ColorPicker from '@/components/ColorPicker'
 import React, { useEffect, useState } from 'react'
 import convert from 'color-convert';
 
@@ -46,24 +46,26 @@ const handleInputChange = (event) => {
       };
 
     return (
-        <div className='flex flex-col gap-4 items-center justify-center p-[2rem]'>
+        <div className='relative flex gap-[0.5rem] items-center justify-center p-[2rem] text-[1rem] text-[#313638] font-medium'>
 
-            <div className='flex items-center justify-center border-[1px] p-[4px] border-[#313638]'>
+            <div className='flex items-center justify-center inp-outer'>
                 <div
-                  className='w-[3rem] h-[2.2rem] border-[1px] border-[#313638]'
+                  className='w-[3rem] h-[2.5rem] inp'
                   style={{
                     background: `rgba(${getRGB.r},${getRGB.g},${getRGB.b},${getRGB.a})`,
                   }}
                 ></div>
             </div>
-                
-            <input
-              type='text'
-              className='border-2 border-blue-900'
-              onClick={handleInputClick}
-              onChange={handleInputChange}
-              value={getRGB.a === 1 ? `#${hex}` : `rgba(${getRGB.r},${getRGB.g},${getRGB.b},${getRGB.a})`}
-            />
+            
+            <div className='inp-outer'>
+              <input
+                type='text'
+                className='inp'
+                onClick={handleInputClick}
+                onChange={handleInputChange}
+                value={getRGB.a === 1 ? `#${hex}` : `rgba(${getRGB.r},${getRGB.g},${getRGB.b},${getRGB.a})`}
+              />
+            </div>
             {visible && <ColorPicker getRGB={getRGB} setGetRGB={setGetRGB} onAlphaChange={handleAlphaChange} />}
                 
             

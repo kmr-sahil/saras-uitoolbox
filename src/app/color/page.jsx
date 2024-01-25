@@ -1,5 +1,5 @@
 "use client"
-import ColorPicker from '@/component/ColorPicker'
+import ColorPicker from '@/components/ColorPicker'
 import React, { useEffect, useState } from 'react'
 import convert from 'color-convert';
 

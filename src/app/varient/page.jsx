@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import convert from 'color-convert';
-import InpColor from '@/component/InpColor'
+import InpColor from '@/components/InpColor'
 
 function VariantPage() {
   const [inputColor, setInputColor] = useState('');
@@ -80,33 +80,45 @@ function VariantPage() {
 
       <InpColor inputColor={inputColor} setInputColor={setInputColor} />
 
-      <input
-        type='color'
-        className='border-2 border-black'
-        value={inputColor}
-        onChange={(e) => setInputColor(e.target.value)}
-      />
-      <input
-        type='text'
-        className='border-2 border-black'
-        placeholder='enter hex code #'
-        value={inputColor}
-        onChange={(e) => setInputColor(e.target.value)}
-      />
+    <div className='flex gap-[0.5rem] items-center justify-center text-[1rem] text-[#313638] font-medium'>
+      <div className='flex items-center justify-center inp-outer'>
+            <div
+              className='w-[3rem] h-[2.5rem] inp'
+              style={{
+                background: `#${inputColor}`,
+              }}
+            ></div>
+        </div>
+
+        <div className='inp-outer'>
+          <input
+            type='text'
+            className='inp'
+            placeholder='enter hex code #'
+            value={inputColor}
+            onChange={(e) => setInputColor(e.target.value)}
+          />
+        </div>
+    </div>
+      
+      
       {error && (
         <div className='mt-2 text-red-500'>
           <p>{error}</p>
         </div>
       )}
+
       {hslColors.map((hsl, index) => (
-            <div
-              key={index}
-              className='w-[10rem] h-[4rem] mt-2 flex items-baseline p-[0.2rem]'
-              style={{ backgroundColor: hsl || 'transparent' }}
-              onClick={() => copyToClipboard("#" + hslToHex(hsl))}
-            >
-              <span className='text-xs mt-auto'>{"#" + hslToHex(hsl)}</span>
-            </div>
+          <div className='inp-outer w-[100%]'>
+              <div
+                key={index}
+                className='w-[100%] flex-grow h-[4rem] inp flex items-baseline p-[0.2rem]'
+                style={{ backgroundColor: hsl || 'transparent' }}
+                onClick={() => copyToClipboard("#" + hslToHex(hsl))}
+              >
+                <span className='text-xs mt-auto'>{"#" + hslToHex(hsl)}</span>
+              </div>
+          </div>
           )
       )}
     </div>
