@@ -9,7 +9,7 @@ function GradientPage() {
     { id: uuidv4(), color: '#00ff00', percent: '100' },
   ]);
 
-  const [gradientType, setGradientType] = useState("");
+  const [gradientType, setGradientType] = useState(false);
   const [gradientDegree, setGradientDegree] = useState(90);
 
  const handleColorChange = (id, color) => {
@@ -61,28 +61,36 @@ function GradientPage() {
     console.log(`Generated CSS Code: ${gradientCode}`);
     return gradientCode;
   };
-  
+
   console.log("Rendering with gradientCode:", generateGradientCode());
 
   return (
-    <div className="flex flex-col gap-4 items-center justify-center p-[2rem]">
-      <div
-        className="w-[40rem] h-32 bg-gradient-to-r"
-        style={{
-          backgroundImage: generateGradientCode(),
-        }}
-      ></div>
+    <div className="flex flex-col gap-4 items-start justify-center p-[2rem] transition-all duration-200">
 
-      {gradientType === "linear" && (
-        <div className="flex items-center gap-2">
-          <label>Degree:</label>
+      <div className="inp-outer">
+        <div
+          className="w-[40rem] h-32 inp bg-gradient-to-r"
+          style={{
+            backgroundImage: generateGradientCode(),
+          }}
+        ></div>
+      </div>
+      
+      
+        <div className="inp-outer relative"
+             style={{
+              opacity: `${gradientType ? '50%' : '100%'}`,
+             }}      
+        >
           <input
+            className="w-[292px] inp px-[6rem] font-semibold"
             type="number"
             value={gradientDegree}
             onChange={(e) => handleDegreeChange(e.target.value)}
           />
+          <h1 className="absolute top-[0.85rem] left-[1.5rem]">Degree : </h1>
         </div>
-      )}
+      
 
 {gradientColors.map((color) => (
         <div key={color.id} className="flex items-center gap-2">
@@ -93,6 +101,7 @@ function GradientPage() {
           />
 
           <input
+            className="slide"
             type="range"
             min="0"
             max="100"
@@ -101,16 +110,26 @@ function GradientPage() {
           />
           <span>{color.percent}%</span>
 
-          <button
-            className="px-[0.5rem] py-[0.25rem] border-2 border-black rounded-md"
-            onClick={() => handleDeleteColor(color.id)}
-          >
-            Delete
-          </button>
+          <div className="inp-outer">
+              <button
+                className="w-[6rem] inp"
+                onClick={() => handleDeleteColor(color.id)}
+              >
+                Delete
+              </button>
+          </div>
+          
         </div>
       ))}
 
-      <button onClick={handleAddColor}>Add Color</button>
+      <div className="inp-outer">
+          <button
+            className="w-[9rem] inp"
+            onClick={handleAddColor}
+          >
+             + Add color
+          </button>
+      </div>
 
 
     <div className="flex gap-[0.5rem] items-center">

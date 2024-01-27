@@ -43,3 +43,8 @@
       @apply w-[14rem] border-[2px] border-[#313638] px-[16px] py-[8px] rounded-[8px] bg-[#E8E9EB] ;
     }
   }
+
+  input[type="range"] {
+    accent-color: #FF9D00;
+    background-color: #000000;
+  }
