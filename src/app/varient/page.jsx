@@ -78,7 +78,13 @@ function VariantPage() {
   return (
     <div className='flex flex-col gap-4 items-center justify-center p-[2rem]'>
 
-      <InpColor inputColor={inputColor} setInputColor={setInputColor} />
+    <InpColor inputColor={inputColor} setInputColor={setInputColor} />
+
+    <div className='text-sm opacity-60 flex justify-center items-center gap-2 w-[300px]'>
+      <div className='h-[2px] w-[15%] bg-black opacity-60 rounded-full'></div>
+      <p>or just enter manually below</p>
+      <div className='h-[2px] w-[15%] bg-black opacity-60 rounded-full'></div>
+    </div>
 
     <div className='flex gap-[0.5rem] items-center justify-center text-[1rem] text-[#313638] font-medium'>
       <div className='flex items-center justify-center inp-outer'>
@@ -90,10 +96,10 @@ function VariantPage() {
             ></div>
         </div>
 
-        <div className='inp-outer'>
+        <div className='inp-outer '>
           <input
             type='text'
-            className='inp'
+            className='inp  '
             placeholder='enter hex code #'
             value={inputColor}
             onChange={(e) => setInputColor(e.target.value)}
@@ -109,7 +115,7 @@ function VariantPage() {
       )}
 
       {hslColors.map((hsl, index) => (
-          <div className='inp-outer w-[100%]'>
+          <div className='inp-outer w-[302px]'>
               <div
                 key={index}
                 className='w-[100%] flex-grow h-[4rem] inp flex items-baseline p-[0.2rem]'

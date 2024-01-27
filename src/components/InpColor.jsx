@@ -46,7 +46,7 @@ const handleInputChange = (event) => {
       };
 
     return (
-        <div className='relative flex gap-[0.5rem] items-center justify-center p-[2rem] text-[1rem] text-[#313638] font-medium'>
+        <div className='relative flex gap-[0.5rem] items-center justify-center text-[1rem] text-[#313638] font-medium'>
 
             <div className='flex items-center justify-center inp-outer'>
                 <div
