@@ -1,5 +1,7 @@
 "use client"
 import React, { useState } from 'react';
+import InpColor from '@/components/InpColor'; // Import the InpColor component
+
 
 function BoxShadowPage() {
   const [shadowDetails, setShadowDetails] = useState({
@@ -13,25 +15,31 @@ function BoxShadowPage() {
     inset: false,
   });
 
-  const handleInputChange = (e) => {
-    const { id, type, value, checked } = e.target;
-    setShadowDetails((prevDetails) => ({
-      ...prevDetails,
-      [id]:
-        type === 'range'
-          ? id.includes('Offset')
-            ? parseInt(value, 10) // Adjusting the range for horizontal and vertical offsets
-            : parseInt(value, 10)
-          : type === 'checkbox'
-          ? checked
-          : value,
-    }));
+  const handleInputChange = (e, id, value) => {
+    const input = e?.target || { id, value }; // Use optional chaining to safely access target
+    const { type, checked } = input;
+  
+    setShadowDetails((prevDetails) => {
+      let updatedDetails = { ...prevDetails };
+      if (type === 'checkbox') {
+        updatedDetails[input.id] = checked;
+      } else {
+        updatedDetails[input.id] =
+          type === 'range'
+            ? input.id.includes('Offset')
+              ? parseInt(input.value, 10)
+              : parseInt(input.value, 10)
+            : input.value;
+      }
+      return updatedDetails;
+    });
   };
+  
 
   const generateBoxShadowCSS = () => {
     const { horOffset, verOffset, blur, spread, shadowColor, inset } = shadowDetails;
     const insetValue = inset ? 'inset ' : '';
-    return `${insetValue}${horOffset}px ${verOffset}px ${blur}px ${spread}px ${shadowColor}`;
+    return `${insetValue}${horOffset}px ${verOffset}px ${blur}px ${spread}px #${shadowColor}`;
   };
 
 
@@ -39,53 +47,50 @@ function BoxShadowPage() {
     <div className="flex flex-col gap-4 items-center justify-center p-[2rem]">
         
       <div
-        className="w-[15rem] h-[15rem] p-[2rem] flex items-center justify-center border-2 border-stone-500 rounded-lg"
+        className="w-[15rem] h-[15rem] flex items-center justify-center inp-outer"
         style={{
-          backgroundColor: shadowDetails.bgColor,
+          backgroundColor: `#${shadowDetails.bgColor}`,
         }}
       >
-        <div
-          className="w-[10rem] h-[10rem] rounded"
-          style={{
-            backgroundColor: shadowDetails.boxColor,
-            boxShadow: generateBoxShadowCSS(),
-          }}
-        ></div>
+        <div className='inp-outer w-[100%] h-[100%] flex items-center justify-center rounded-[8px]'>
+
+            <div
+              className="w-[10rem] h-[10rem] rounded"
+              style={{
+                backgroundColor: `#${shadowDetails.boxColor}`,
+                boxShadow: generateBoxShadowCSS(),
+              }}
+            ></div>
+
+        </div>
+        
       </div>
 
-        
-      <input
-        id="bgColor"
-        type="color"
-        value={shadowDetails.bgColor}
-        onChange={handleInputChange}
-        placeholder="Background Color"
+      <InpColor
+        inputColor={shadowDetails.bgColor}
+        setInputColor={(newColor) => handleInputChange(null, 'bgColor', newColor)}
       />
 
-      <input
-        id="shadowColor"
-        type="color"
-        value={shadowDetails.shadowColor}
-        onChange={handleInputChange}
-        placeholder="Shadow Color"
+      <InpColor
+        inputColor={shadowDetails.shadowColor}
+        setInputColor={(newColor) => handleInputChange(null, 'shadowColor', newColor)}
       />
 
-      <input
-        id="boxColor"
-        type="color"
-        value={shadowDetails.boxColor}
-        onChange={handleInputChange}
-        placeholder="Box Color"
+      <InpColor
+        inputColor={shadowDetails.boxColor}
+        setInputColor={(newColor) => handleInputChange(null, 'boxColor', newColor)}
       />
 
-      <label htmlFor="horizontalOffset">Horizontal Offset: {shadowDetails.horOffset}px</label>
+    <div className='w-[12rem] gap-4'>
+
+    <label htmlFor="horizontalOffset">Horizontal Offset: {shadowDetails.horOffset}px</label>
       <input
         id="horOffset"
         type="range"
         value={shadowDetails.horOffset} // Adjusting the range for display
         min={-32}
         max={32}
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange(e, 'horOffset')}
       />
 
       <label htmlFor="verticalOffset">Vertical Offset: {shadowDetails.verOffset}px</label>
@@ -95,11 +100,11 @@ function BoxShadowPage() {
         value={shadowDetails.verOffset} // Adjusting the range for display
         min={-32}
         max={32}
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange(e, 'verOffset')}
       />
 
       <label htmlFor="blur">Blur: {shadowDetails.blur}px</label>
-      <input id="blur" type="range" value={shadowDetails.blur} min={0} max={64} onChange={handleInputChange} />
+      <input id="blur" type="range" value={shadowDetails.blur} min={0} max={64} onChange={(e) => handleInputChange(e, 'blur')}/>
 
       <label htmlFor="spread">Spread: {shadowDetails.spread}px</label>
       <input
@@ -108,18 +113,23 @@ function BoxShadowPage() {
         value={shadowDetails.spread}
         min={0}
         max={32}
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange(e, 'spread')}
       />
 
-      <label>
-        <input
-          id="inset"
-          type="checkbox"
-          checked={shadowDetails.inset}
-          onChange={handleInputChange}
-        />
-        Inset
-      </label>
+      <div className="flex gap-[0.5rem] items-center">
+        <div className='flex items-center justify-center inp-outer'>
+            <div
+              className='w-[2rem] h-[2rem] inp'
+              onClick={() => setShadowDetails({ ...shadowDetails, inset: !shadowDetails.inset })}
+
+            ></div>
+        </div>
+
+      <div className="">Inset</div>
+    </div>
+
+    </div>
+      
 
       <div>
         {/* Display the generated CSS code */}
