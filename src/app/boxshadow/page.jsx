@@ -81,7 +81,7 @@ function BoxShadowPage() {
         setInputColor={(newColor) => handleInputChange(null, 'boxColor', newColor)}
       />
 
-    <div className='w-[12rem] gap-4'>
+    <div className='w-[12rem] '>
 
     <label htmlFor="horizontalOffset">Horizontal Offset: {shadowDetails.horOffset}px</label>
       <input

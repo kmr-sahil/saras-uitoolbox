@@ -15,7 +15,7 @@ function ColorPicker({setGetRGB, getRGB}) {
 
   return (
     <>
-      <div className='absolute top-[6rem] left-[6.5rem] custom-layout example'>
+      <div className='absolute top-[4rem] left-[4rem] custom-layout example z-50'>
             <RgbaColorPicker color={color} onChange={setColor} />
       </div>
     </>
