@@ -1,6 +1,5 @@
 "use client"
 import React, { useState } from 'react';
-import { RgbaColorPicker } from 'react-colorful';
 
 function BoxShadowPage() {
   const [shadowDetails, setShadowDetails] = useState({
@@ -54,6 +53,7 @@ function BoxShadowPage() {
         ></div>
       </div>
 
+        
       <input
         id="bgColor"
         type="color"

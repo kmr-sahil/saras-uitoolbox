@@ -44,7 +44,57 @@
     }
   }
 
+
+
   input[type="range"] {
-    accent-color: #FF9D00;
-    background-color: #000000;
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none; 
+    /* creating a custom design */
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+    /*  slider progress trick  */
+    overflow: hidden;
+    border-radius: 16px;
   }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 15px;
+    background: #E8E9EB;
+    border-radius: 16px;
+  }
+
+  /* Track: Mozilla Firefox */
+input[type="range"]::-moz-range-track {
+  height: 15px;
+  background: #E8E9EB;
+  border-radius: 16px;
+}
+
+/* Thumb: webkit */
+input[type="range"]::-webkit-slider-thumb {
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none; 
+  /* creating a custom design */
+  height: 15px;
+  width: 15px;
+  background-color: #FF9D00;
+  border-radius: 50%;
+  border: 2px solid #FF9D00;
+  /*  slider progress trick  */
+  box-shadow: -407px 0 0 400px #313638;
+}
+
+
+/* Thumb: Firefox */
+input[type="range"]::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  background-color: #FF9D00;
+  border-radius: 50%;
+  border: 1px solid #313638;
+  /*  slider progress trick  */
+  box-shadow: -407px 0 0 400px #313638;
+}

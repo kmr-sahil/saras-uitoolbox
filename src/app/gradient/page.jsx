@@ -100,8 +100,10 @@ function GradientPage() {
             setInputColor={(newColor) => handleColorChange(color.id, newColor)}
           />
 
+        <div className="w-[8rem]">
+        
           <input
-            className="slide"
+            className="w-[4rem] inline"
             type="range"
             min="0"
             max="100"
@@ -109,6 +111,8 @@ function GradientPage() {
             onChange={(e) => handlePercentageChange(color.id, e.target.value)}
           />
           <span>{color.percent}%</span>
+        
+        </div>
 
           <div className="inp-outer">
               <button
