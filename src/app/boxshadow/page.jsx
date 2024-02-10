@@ -42,20 +42,27 @@ function BoxShadowPage() {
     return `${insetValue}${horOffset}px ${verOffset}px ${blur}px ${spread}px #${shadowColor}`;
   };
 
+  const copyCssToClipboard = () => {
+    const generatedCss = generateBoxShadowCSS();
+    navigator.clipboard.writeText(generatedCss)
+      .then(() => alert('Generated CSS copied to clipboard'))
+      .catch((error) => console.error('Failed to copy generated CSS: ', error));
+  };
 
   return (
-    <div className="flex flex-col gap-4 items-center justify-center p-[2rem]">
+    <div className="w-[100%] mobile:w-[27rem] laptop:w-[48rem] mx-auto grid justify-between items-stretch grid-cols-2 gap-4 p-[2rem]">
         
+    <div className='col-span-2 laptop:col-span-1'>
       <div
-        className="w-[15rem] h-[15rem] flex items-center justify-center inp-outer"
+        className="h-[16.75rem] laptop:h-[20.75rem] flex items-center justify-center inp-outer"
         style={{
           backgroundColor: `#${shadowDetails.bgColor}`,
         }}
       >
-        <div className='inp-outer w-[100%] h-[100%] flex items-center justify-center rounded-[8px]'>
+        <div className='inp-outer w-[100%] h-[16rem] laptop:h-[20rem] flex items-center justify-center rounded-[8px]'>
 
             <div
-              className="w-[10rem] h-[10rem] rounded"
+              className="w-[8rem] h-[8rem] rounded"
               style={{
                 backgroundColor: `#${shadowDetails.boxColor}`,
                 boxShadow: generateBoxShadowCSS(),
@@ -65,6 +72,9 @@ function BoxShadowPage() {
         </div>
         
       </div>
+    </div>
+
+    <div className='col-span-2 laptop:col-span-1 flex flex-col gap-[1rem]'>
 
       <InpColor
         inputColor={shadowDetails.bgColor}
@@ -81,10 +91,11 @@ function BoxShadowPage() {
         setInputColor={(newColor) => handleInputChange(null, 'boxColor', newColor)}
       />
 
-    <div className='w-[12rem] '>
+    <div className='w-[12rem] flex flex-col'>
 
     <label htmlFor="horizontalOffset">Horizontal Offset: {shadowDetails.horOffset}px</label>
       <input
+        className='mb-[1rem]'
         id="horOffset"
         type="range"
         value={shadowDetails.horOffset} // Adjusting the range for display
@@ -95,6 +106,7 @@ function BoxShadowPage() {
 
       <label htmlFor="verticalOffset">Vertical Offset: {shadowDetails.verOffset}px</label>
       <input
+        className='mb-[1rem]'
         id="verOffset"
         type="range"
         value={shadowDetails.verOffset} // Adjusting the range for display
@@ -104,10 +116,18 @@ function BoxShadowPage() {
       />
 
       <label htmlFor="blur">Blur: {shadowDetails.blur}px</label>
-      <input id="blur" type="range" value={shadowDetails.blur} min={0} max={64} onChange={(e) => handleInputChange(e, 'blur')}/>
+      <input 
+          className='mb-[1rem]'
+          id="blur" 
+          type="range" 
+          value={shadowDetails.blur} 
+          min={0} 
+          max={64} 
+          onChange={(e) => handleInputChange(e, 'blur')}/>
 
       <label htmlFor="spread">Spread: {shadowDetails.spread}px</label>
       <input
+        className='mb-[1rem]'
         id="spread"
         type="range"
         value={shadowDetails.spread}
@@ -129,13 +149,19 @@ function BoxShadowPage() {
     </div>
 
     </div>
+  </div> {/* end user inp */}
       
-
-      <div>
-        {/* Display the generated CSS code */}
-        {`-webkit-box-shadow: ${generateBoxShadowCSS()};
-        -moz-box-shadow: ${generateBoxShadowCSS()};
-        box-shadow: ${generateBoxShadowCSS()};`}
+      {/* Display the generated CSS */}
+      <div className='col-span-2 inp-outer'>
+        <div className='inp-outer rounded-[8px] p-[0.5rem] relative'>
+            <h2 className='text-[0.75rem] font-thin mb-[0.5rem]'>Generated CSS:</h2>
+            <p>{generateBoxShadowCSS()}</p>
+            <div className=' absolute right-2 bottom-2 inp-outer'> 
+              <button onClick={copyCssToClipboard} className='h-[1.5rem] inp-outer bg-[#FF9D00] px-[0.5rem] py-[2.5px]  text-[0.75rem] rounded-[8px] '>copy</button>
+            </div>
+            
+        </div>
+        
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ function VariantPage() {
   const [inputColor, setInputColor] = useState('');
   const [hslColors, setHslColors] = useState([]);
   const [error, setError] = useState(null);
+  const [copyButtonIndex, setCopyButtonIndex] = useState(null); // State to manage which div's copy button is active
 
   useEffect(() => {
     if (inputColor) {
@@ -76,7 +77,9 @@ function VariantPage() {
   
 
   return (
-    <div className='flex flex-col gap-4 items-center justify-center p-[2rem]'>
+    <div className='w-[100%] mobile:w-[27rem] laptop:w-[48rem] mx-auto grid justify-between items-stretch grid-cols-2 gap-4 p-[2rem]'>
+
+  <div className='col-span-2 laptop:col-span-1 flex flex-col gap-4'>
 
     <InpColor inputColor={inputColor} setInputColor={setInputColor} />
 
@@ -86,7 +89,7 @@ function VariantPage() {
       <div className='h-[2px] w-[15%] bg-black opacity-60 rounded-full'></div>
     </div>
 
-    <div className='flex gap-[0.5rem] items-center justify-center text-[1rem] text-[#313638] font-medium'>
+    <div className='flex gap-[0.5rem] items-center justify-start text-[1rem] text-[#313638] font-medium'>
       <div className='flex items-center justify-center inp-outer'>
             <div
               className='w-[3rem] h-[2.5rem] inp'
@@ -106,8 +109,11 @@ function VariantPage() {
           />
         </div>
     </div>
+
+  </div>
       
-      
+   <div className='col-span-2 laptop:col-span-1 flex flex-col gap-4'>
+
       {error && (
         <div className='mt-2 text-red-500'>
           <p>{error}</p>
@@ -118,16 +124,34 @@ function VariantPage() {
           <div className='inp-outer w-[302px]'>
               <div
                 key={index}
-                className='w-[100%] flex-grow h-[4rem] inp flex items-baseline p-[0.2rem]'
+                className='relative w-[100%] flex-grow h-[4rem] inp flex items-baseline p-[0.2rem]'
                 style={{ backgroundColor: hsl || 'transparent' }}
-                onClick={() => copyToClipboard("#" + hslToHex(hsl))}
+                onMouseEnter={() => setCopyButtonIndex(index)} // Set the active copy button index on hover
+                onMouseLeave={() => setCopyButtonIndex(null)} // Reset the active copy button index on mouse leave
+                onTouchStart={() => setCopyButtonIndex(index)} // Set the active copy button index on touch start
+                onTouchEnd={() => setCopyButtonIndex(null)} // Reset the active copy button index on touch end
               >
-                <span className='text-xs mt-auto'>{"#" + hslToHex(hsl)}</span>
+                <span className='text-xs text-yellow-50 mt-auto bg-black bg-opacity-50 backdrop-blur-[10px] px-[0.5rem] py-[0.1rem] rounded-[4px]'>
+                     #{hslToHex(hsl)}
+                   </span>
+                   {copyButtonIndex === index && (
+                     <div className='absolute right-1 bottom-1 inp-outer h-[32px] flex justify-center items-center'
+                       style={{ transition: 'opacity 0.3s, transform 0.3s', opacity: 1, transform: 'scale(1)' }}
+                     >
+                       <button
+                         onClick={() => copyToClipboard('#' + hslToHex(hsl))}
+                         className='h-[1.25rem] inp-outer bg-[#FF9D00] px-[0.5rem] py-[0px] leading-3 text-[0.5rem] rounded-[8px]'
+                       >
+                         copy
+                       </button>
+                     </div>
+                   )}
               </div>
           </div>
           )
       )}
-    </div>
+  </div>   
+  </div>
   );
 }
 

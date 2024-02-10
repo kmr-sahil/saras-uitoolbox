@@ -5,7 +5,7 @@ import convert from 'color-convert';
 
 function ColorTestPage({setInputColor, inputColor}) {
     const [visible, setVisible] = useState(false);
-    const [getRGB, setGetRGB] = useState({ r: 0, g: 0, b: 0, a: 1 });
+    const [getRGB, setGetRGB] = useState({ r: 196, g: 36, b: 80, a: 1 });
     const [hex, setHex] = useState(inputColor);
 
     useEffect(() => {

@@ -41,40 +41,9 @@ border: 1px solid rgba(${rgbColor.join(', ')}, 0.25);`;
     };
 
   return (
-    <div className="w-[52rem] mx-auto grid justify-between items-stretch grid-cols-2 gap-4 p-[2rem]">
+    <div className="w-[100%] mobile:w-[27rem] laptop:w-[48rem] mx-auto grid justify-between items-stretch grid-cols-2 gap-4 p-[2rem]">
 
-    <div className=''>
-
-    <InpColor
-        inputColor={glass.color}
-        setInputColor={(newColor) => setGlass({ ...glass, color: newColor })}
-    />
-
-      <div className="w-[12rem]">
-        <label htmlFor="blurRange">Blur: {glass.blur}px</label>
-        <input
-          id="blurRange"
-          type="range"
-          min="0"
-          max="50" // You can adjust the maximum blur value as needed
-          value={glass.blur}
-          onChange={(e) => setGlass({ ...glass, blur: parseInt(e.target.value) })}
-        />
-        <label htmlFor="opacityRange">Opacity: {glass.opacity}</label>
-        <input
-          id="opacityRange"
-          type="range"
-          step="0.1"
-          min="0"
-          max="1"
-          value={glass.opacity}
-          onChange={(e) => setGlass({ ...glass, opacity: parseFloat(e.target.value) })}
-        />
-      </div>
-
-    </div>
-
-    <div className='inp-outer'>
+    <div className='inp-outer col-span-2 laptop:col-span-1'>
       <div className='rounded-[8px] inp-outer p-0'>
           <div
               className="w-[100%] h-[25rem] flex items-center justify-center rounded-[8px]"
@@ -145,7 +114,36 @@ border: 1px solid rgba(${rgbColor.join(', ')}, 0.25);`;
         </div>
     </div>
       
-            
+    <div className='col-span-2 laptop:col-span-1'>
+
+<InpColor
+    inputColor={glass.color}
+    setInputColor={(newColor) => setGlass({ ...glass, color: newColor })}
+/>
+
+  <div className="w-[12rem]">
+    <label htmlFor="blurRange">Blur: {glass.blur}px</label>
+    <input
+      id="blurRange"
+      type="range"
+      min="0"
+      max="50" // You can adjust the maximum blur value as needed
+      value={glass.blur}
+      onChange={(e) => setGlass({ ...glass, blur: parseInt(e.target.value) })}
+    />
+    <label htmlFor="opacityRange">Opacity: {glass.opacity}</label>
+    <input
+      id="opacityRange"
+      type="range"
+      step="0.1"
+      min="0"
+      max="1"
+      value={glass.opacity}
+      onChange={(e) => setGlass({ ...glass, opacity: parseFloat(e.target.value) })}
+    />
+  </div>
+
+</div>
       
 
       {/* Display the generated CSS */}
