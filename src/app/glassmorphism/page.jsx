@@ -150,7 +150,7 @@ border: 1px solid rgba(${rgbColor.join(', ')}, 0.25);`;
       <div className='col-span-2 inp-outer'>
         <div className='inp-outer rounded-[8px] p-[0.5rem] relative'>
             <h2 className='text-[0.75rem] font-thin mb-[0.5rem]'>Generated CSS:</h2>
-            <pre>{generateCss()}</pre>
+            <p>{generateCss()}</p>
             <div className=' absolute right-2 bottom-2 inp-outer'> 
               <button onClick={copyCssToClipboard} className='h-[1.5rem] inp-outer bg-[#FF9D00] px-[0.5rem] py-[2.5px]  text-[0.75rem] rounded-[8px] '>copy</button>
             </div>

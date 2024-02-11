@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import InpColor from '@/components/InpColor'; // Import the InpColor component
 
 
@@ -8,12 +8,20 @@ function BoxShadowPage() {
     bgColor: '#fafafa',
     boxColor: '#474bff',
     shadowColor: '#9a9a9a',
-    horOffset: 0,
-    verOffset: 0,
+    horOffset: 4,
+    verOffset: 4,
     blur: 10,
     spread: 4,
     inset: false,
   });
+
+  useEffect(() => {
+    // Set the default colors after the component has mounted
+    setShadowDetails((prevDetails) => ({
+      ...prevDetails,
+      bgColor: '#fafafa',
+    }));
+  }, []);
 
   const handleInputChange = (e, id, value) => {
     const input = e?.target || { id, value }; // Use optional chaining to safely access target
